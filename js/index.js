@@ -5,6 +5,7 @@ let viewEngine = [];
 let positionBomb = [];
 let gameOver = false;
 let firstMove = true;
+let updated = [];
 
 let rows;
 let columns;
@@ -43,6 +44,7 @@ function createBoard() {
         let row = document.createElement('tr');
         for (let j = 0; j < columns; j++) {
             let column = document.createElement('td');
+            column.className = 'container';
             let button = document.createElement('button');
             button.className = 'box'
             column.appendChild(button);
@@ -61,9 +63,9 @@ function boxTouchEvents() {
             if (firstMove) {
                 firstMove = false;
                 createBombs(calculateMove(i), bombsNumber, rows, columns);
-                console.log(view);
-
             }
+            console.log(view);
+            openBox(calculateMove(i),boxes);
         })
     }
 }
@@ -113,6 +115,9 @@ function numeroRandom(positionBomb, rows, columns) {
 }
 
 function openBox(move, boxes) {
+    console.log(move[0]);
+    console.log(view[move[0]]);
+    console.log(view[move[0] + 1]);
     if (view[move[0]][move[1]] != '?') {
         return;
     }
@@ -121,7 +126,9 @@ function openBox(move, boxes) {
         for (let i = 0; i < 3; i++) {
             for (let j = -1; j <= 1; j++) {
                 if (viewEngine[move[0] + j] && viewEngine[move[0] + j][move[1] - 1 + i] > -1 && !(move[0] + j == move[0] && move[1] - 1 + i == move[1])) {
-                    openBox(view, viewEngine, [[move[0] + j, move[1] - 1 + i]]);
+                    console.log("Esto se manda:" + [move[0] + j, move[1] - 1 + i] );
+                    console.log("Esto tiene view: " + view[move[0] + j][move[1] - 1 + i]);
+                    openBox([move[0] + j, move[1] - 1 + i], boxes);
                 }
             }
         }
@@ -133,33 +140,63 @@ function openBox(move, boxes) {
 }
 
 function updateHtml(boxes) {
+    const containers = document.querySelectorAll('.container');
     let count = 0;
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < columns; j++) {
-            if (view[i][j] !== '?') {
-                boxes[count].style.display = none;
+            if (view[i][j] !== '?' && !(updated.includes(count))) {
+                boxes[count].style.display = 'none';
+                let div = document.createElement('div');
+                let text = document.createElement('p');
                 switch (view[i][j]) {
                     case -1:
-                    
+                        
                         break;
                     case 1:
+                        text.textContent = '1';
+                        text.className = 'one';
+                        div.appendChild(text);
                         break;
                     case 2:
+                        text.textContent = '2';
+                        text.className = 'two';
+                        div.appendChild(text);
                         break;
                     case 3:
+                        text.textContent = '3';
+                        text.className = 'three';
+                        div.appendChild(text);
                         break;
                     case 4:
+                        text.textContent = '4';
+                        text.className = 'four';
+                        div.appendChild(text);
                         break;
                     case 5:
+                        text.textContent = '1';
+                        text.className = 'five';
+                        div.appendChild(text);
                         break;
                     case 6:
+                        text.textContent = '1';
+                        text.className = 'six';
+                        div.appendChild(text);
                         break;
                     case 7:
+                        text.textContent = '7';
+                        text.className = 'seven';
+                        div.appendChild(text);
                         break;
                     case 8:
+                        text.textContent = '8';
+                        text.className = 'eight';
+                        div.appendChild(text);
                         break;
                 }
+                containers[count].appendChild(div);
+                updated.push(count);
             }
+            count ++;
         }
     }
 }
