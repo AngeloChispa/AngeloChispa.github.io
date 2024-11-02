@@ -1,0 +1,76 @@
+/* Encabezado */
+.top {
+    background-color: black;
+    height: 100px;
+}
+
+.top h1 {
+    margin: 0;
+    padding-top: 30px;
+    color: white;
+    text-align: center;
+}
+
+
+.board {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.board td {
+    border: 1px solid black;
+    padding: 0; 
+    margin: 0;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+.board table{
+    border-collapse: collapse;
+}
+.board button {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    
+    background-color: lightgray;
+    cursor: pointer;
+    line-height: 0;
+}
+
+
+.board button:active {
+    background-color: darkgray;
+}
+
+#gameModes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+#gameModes button {
+    font-size: 30px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: blue; 
+    color: white; 
+    border: none;
+    border-radius: 5px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: background-color 0.3s, transform 0.3s; 
+}
+
+#gameModes button:hover {
+    background-color: rgb(59, 59, 172); 
+    transform: translateY(-2px); 
+}
+
+#gameModes button:active {
+    transform: translateY(0);
+}
