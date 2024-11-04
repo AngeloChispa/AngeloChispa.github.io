@@ -15,6 +15,24 @@ gameModes[0].addEventListener('click', () => {
     rows = 9;
     columns = 9
     bombsNumber = 10;
+    initGame();
+});
+
+gameModes[1].addEventListener('click', () => {
+    rows = 16;
+    columns = 16;
+    bombsNumber = 40;
+    initGame();
+});
+
+gameModes[2].addEventListener('click', () => {
+    rows = 23;
+    columns = 23;
+    bombsNumber = 70;
+    initGame();
+});
+
+function initGame(){
     for (let i = 0; i < rows; i++) {
         let tempColumn = [];
         let tempView = [];
@@ -28,7 +46,7 @@ gameModes[0].addEventListener('click', () => {
     hiddenButtons();
     createBoard();
     boxTouchEvents();
-});
+}
 
 
 function hiddenButtons() {
@@ -66,8 +84,29 @@ function boxTouchEvents() {
             }
             console.log(view);
             openBox(calculateMove(i),boxes);
+            if(!gameOver){
+                if(checkWin()){
+                    alert('¡¡¡Felicidades Ganaste!!!');
+                    location.reload();  
+                }
+            }
         })
     }
+}
+
+function checkWin(){
+    let count = 0;
+    for(let i = 0; i<rows; i++){
+        for(let j = 0; j<columns; j++){
+            if(view[i][j] === '?'){
+                count ++;
+            }
+            if(count>bombsNumber){
+                return false
+            }
+        }
+    }
+    return true;
 }
 
 function calculateMove(number) {
@@ -133,8 +172,9 @@ function openBox(move, boxes) {
             }
         }
     } else if (viewEngine[move[0]][move[1]] == -1) {
-        console.log('¡¡¡GG!!!');
         gameOver = true;
+        alert('¡¡¡GG!!!');
+        location.reload();
     }
     updateHtml(boxes);
 }
